@@ -82,11 +82,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'coursedb',
         'USER': 'root',
-        'PASSWORD': '123456',
+        'PASSWORD': 'Admin@123',
         'HOST': '' # mặc định localhost
     }
 }
 
+MEDIA_ROOT = '%s/courses/static/' % BASE_DIR
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
