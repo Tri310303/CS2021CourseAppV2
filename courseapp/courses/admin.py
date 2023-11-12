@@ -1,8 +1,9 @@
 from django.contrib import admin
+from django.template.response import TemplateResponse
 from django.utils.safestring import mark_safe
 from django import forms
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
-
+from django.urls import path
 from .models import Category,Course , Lesson  , Tag
 
 
@@ -40,9 +41,20 @@ class Media:
 
 
 
+class CourseAppAdminSite(admin.AdminSite):
+    site_header = 'iSuccess'
 
-admin.site.register(Category , CategoryAdmin)
-admin.site.register(Course, CourseAdmin)
-admin.site.register(Lesson)
-admin.site.register(Tag)
+    def get_urls(self):
+        return [
+                   path('course-stats/', self.stats_view)
+               ] + super().get_urls()
+
+    def stats_view(self, request):
+        return TemplateResponse(request,'admin/stats.html')
+
+admin_site = CourseAppAdminSite(name='MyApp')
+admin_site.register(Category , CategoryAdmin)
+admin_site.register(Course, CourseAdmin)
+admin_site.register(Lesson)
+admin_site.register(Tag)
 
